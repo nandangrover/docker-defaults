@@ -1,0 +1,57 @@
+{
+  "name": "docker-defaults",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.js",
+  "dependencies": {
+    "apollo-boost": "^0.4.4",
+    "graphql.macro": "^1.4.2",
+    "lodash.flowright": "^3.5.0",
+    "react": "^16.9.0",
+    "react-apollo": "^3.1.3",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-scripts": "3.1.2",
+    "redux": "^4.0.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "lint": "eslint --color src/**/*.js",
+    "lint:fix": "eslint --color --fix src/**/*.js",
+    "clobber": "rm -rf node_modules/ && npm cache clean --force",
+    "clean": "del dist && npm run nods",
+    "clean-install": "npm run clobber && npm install && npm prune && npm dedupe",
+    "nods": "find ./ -name '.DS_Store' -depth -delete -ignore_readdir_race"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix",
+      "pre-push": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": ["eslint --fix", "git add"]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.0.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2"
+  }
+}

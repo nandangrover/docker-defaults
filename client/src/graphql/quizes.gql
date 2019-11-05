@@ -1,0 +1,13 @@
+query {
+  quizes {
+    id
+    authorName
+    shortDesc
+    questions {
+      question
+      options {
+        option
+      }
+    }
+  }
+}

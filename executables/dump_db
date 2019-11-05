@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "Dumping Data..."
+docker exec docker-defaults_mongo_1 sh -c 'exec mongodump -d admin -u root -p root123 --archive' > /Volumes/backup.$(date "+%y_%m_%d_%H_%M").tar.gz #Specify path here
+echo "Data Dump Complete..."

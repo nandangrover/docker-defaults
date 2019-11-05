@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#In progress
+
+echo "Loading Data..."
+docker exec docker-defaults_mongo_1 sh -c 'exec mongodump -d admin -u root -p root123 --archive' > /Volumes/docker-defaults.dump
+echo "Data Dump Complete..."

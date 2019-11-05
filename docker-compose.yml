@@ -1,0 +1,72 @@
+version: '2.3'
+
+services:
+
+  client:
+    build:
+      context: ./client
+      # Change NODE_ENV=production for production build
+      args:
+        - NODE_ENV=development
+    ports:
+      - "3001:3000"
+      - "49153:49153"
+    volumes:
+      - ./client:/opt/client_app:delegated
+      - ./client/package.json:/opt/client_app/package.json
+      - ./client/package-lock.json:/opt/client_app/package-lock.json
+      - client_data:/opt/client_app/node_modules
+      - shared_data:/opt/client_app/build
+    environment:
+      - CHOKIDAR_USEPOLLING=true # To make it work in windows system. Remove during production
+  server:
+    build:
+      context: ./server
+      # Change NODE_ENV=production for production build
+      args:
+        - NODE_ENV=development
+    ports:
+      - "80:5000"
+      - "9229:9229"
+      - "9230:9230"
+    volumes:
+      - ./server:/opt/server_app/:delegated
+      - ./server/package.json:/opt/server_app/package.json
+      - ./server/package-lock.json:/opt/server_app/package-lock.json
+      - server_data:/opt/server_app/node_modules
+      - shared_data:/opt/server_app/build
+    environment:
+      - MONGO_USERNAME=root
+      - MONGO_PASSWORD=root123
+      - MONGO_HOSTNAME=mongo
+      - MONGO_PORT=27017
+      - MONGO_DATABASE_NAME=admin
+    depends_on:
+      mongo:
+        condition: service_healthy
+    links:
+      - client
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root123
+      - MONGO_INITDB_DATABASE=admin
+    healthcheck:
+      test: "[ `echo 'db.runCommand(\"ping\").ok' | mongo localhost/example-database --quiet` ] && echo 0 || echo 1"
+      interval: 5s
+      start_period: 10s
+      timeout: 4s
+      retries: 3
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+volumes:
+  mongo_data: 
+      external: true
+  server_data:
+  client_data:
+  shared_data:
