@@ -24,11 +24,11 @@ USER node
 COPY package.json /opt/server_app
 COPY package-lock.json /opt/server_app
 
-RUN npm install --no-optional && npm cache clean --force
+RUN rm -rf node_modules/ && npm cache clean --force && npm install --no-optional && npm prune && npm dedupe
 
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
-COPY . /opt/server_app
+COPY --chown=node:node . /opt/server_app
 
 # npm start for production
 CMD [ "npm", "run", "start-watch"]
