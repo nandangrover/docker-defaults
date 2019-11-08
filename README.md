@@ -2,7 +2,7 @@
   <img  alt="docker for dummies" height="128px" width="128px" src="https://miro.medium.com/max/630/1*j_zP74-cpvXRcs8dM_pkMQ.jpeg">
 </p>
 
-Prototype for Docker Defaults
+<h3 align="center"> Prototype for Docker Defaults </h3>
 
 ## Objective
 - Make docker defaults for prod and dev for kickstarting a project easy way
